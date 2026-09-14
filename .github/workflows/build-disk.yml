@@ -61,6 +61,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@abd2ef45e78c5afb21d64d4ca52ee8550d9572c7 # v4.5.1
+        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       # titanoboa can't use the plain image (it lacks the live/installer layer).
       # Build the payload image (installer/) FROM bazzite-tower, then feed THAT.
       # Privileged build: the payload build.sh runs dracut/podman/dnf scriptlets.
