@@ -64,15 +64,18 @@ jobs:
       - name: Use native kernel overlayfs for rootful podman
         run: |
           set -euo pipefail
+          # Pin native overlayfs BEFORE any podman command initializes the store.
           printf '[storage]\ndriver = "overlay"\nrunroot = "/run/containers/storage"\ngraphroot = "/var/lib/containers/storage"\n' \
             | sudo tee /etc/containers/storage.conf
-          # Clear any state the bundle's fuse-overlayfs config already wrote so
-          # the store isn't mixed-format. Ignore errors: an empty/fresh store is fine.
-          sudo podman system reset -f 2>/dev/null || true
+          
+          # The runner ships a pre-seeded rootful store whose DB recorded a different
+          # (empty/fuse) graph driver. `podman system reset` can't clear it -- it must
+          # OPEN that store first, which is the operation that fails with the
+          # "database configuration mismatch". Delete the store on disk directly so
+          # podman rebuilds a clean overlay store from the config above.
+          sudo rm -rf /var/lib/containers/storage/* /run/containers/storage/*
+          
           sudo podman info --format 'driver={{.Store.GraphDriverName}} options={{.Store.GraphOptions}}'
-          # Fail loudly if the mount_program override somehow survived -- a
-          # silent fallback would reintroduce the exact failure this step exists
-          # to prevent.
           if sudo podman info --format '{{.Store.GraphOptions}}' | grep -q mount_program; then
             echo "::error::rootful podman still uses a mount_program (fuse-overlayfs); native overlayfs pin failed"
             exit 1
