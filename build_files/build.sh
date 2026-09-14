@@ -9,11 +9,13 @@ set -ouex pipefail
 # List of rpmfusion packages can be found here:
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/43/x86_64/repoview/index.html&protocol=https&redirect=1
 
-dnf5 remove -y waydroid waydroid-selinux ptyxis lutris qemu qemu-* spice-server akonadi-server konsole
+# SETUP REPOS
+dnf5 install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release terra-release-nvidia terra-gpg-keys
+dnf5 upgrade --refresh
+dnf5 remove -y waydroid waydroid-selinux lutris qemu qemu-* spice-server akonadi-server
 
-dnf5 copr enable scottames/ghostty -y
-dnf5 install -y ghostty tuned tuned-ppd --skip-unavailable
-dnf5 -y copr disable scottames/ghostty
+# INSTALL
+dnf5 install -y tuned tuned-ppd terra-release terra-gpg-keys --skip-unavailable
 
 # Use a COPR Example:
 #
