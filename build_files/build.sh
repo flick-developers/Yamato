@@ -10,8 +10,8 @@ set -ouex pipefail
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/43/x86_64/repoview/index.html&protocol=https&redirect=1
 
 # SETUP REPOS
-sudo sed -i 's/^enabled=0/enabled=1/' /etc/yum.repos.d/terra.repo
-sudo sed -i 's/^enabled=0/enabled=1/' /etc/yum.repos.d/terra-extras.repo
+sed -i 's/^enabled=0/enabled=1/' /etc/yum.repos.d/terra.repo
+sed -i 's/^enabled=0/enabled=1/' /etc/yum.repos.d/terra-extras.repo
 dnf5 upgrade --refresh
 dnf5 install terra-release-mesa terra-release-nvidia 
 dnf5 remove -y waydroid waydroid-selinux lutris qemu qemu-* spice-server akonadi-server
