@@ -96,12 +96,13 @@ jobs:
             --build-arg BASE_IMAGE="${IMAGE_REGISTRY}/${IMAGE_NAME}:${DEFAULT_TAG}" \
             -t "localhost/${IMAGE_NAME}-payload:${DEFAULT_TAG}" \
             installer/
+          tree ${{ github.workspace }}
 
       # If the build fails for lack of disk, add bazzite's 70G btrfs loopback at
       # /var/lib/containers/storage (see build_iso.yml in ublue-os/bazzite).
       - name: Build live ISO
         id: build
-        uses: ublue-os/titanoboa@5c457c3d0518bd17e754be0fd98a60d29d26abb4 # main @ 2026-05-19 (#138); mid-revamp, no tagged release to pin
+        uses: ublue-os/titanoboa@main
         with:
           image-ref: localhost/${{ env.IMAGE_NAME }}-payload:${{ env.DEFAULT_TAG }}
           iso-dest: ${{ github.workspace }}/output/${{ env.IMAGE_NAME }}-${{ env.DEFAULT_TAG }}-live-amd64.iso
