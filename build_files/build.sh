@@ -12,7 +12,6 @@ set -ouex pipefail
 # SETUP REPOS
 sed -i 's/^enabled=0/enabled=1/' /etc/yum.repos.d/terra.repo
 sed -i 's/^enabled=0/enabled=1/' /etc/yum.repos.d/terra-extras.repo
-dnf5 update
 dnf5 install terra-release-mesa terra-release-nvidia 
 dnf5 remove -y waydroid waydroid-selinux lutris qemu qemu-* spice-server akonadi-server
 
