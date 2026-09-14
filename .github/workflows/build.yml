@@ -14,12 +14,13 @@ on:
   workflow_dispatch:
 
 env:
-  BIB_IMAGE: quay.io/centos-bootc/bootc-image-builder:latest
+  BIB_IMAGE: "quay.io/centos-bootc/bootc-image-builder:latest"
   IMAGE_DESC: "An image meant to cut down on (some) software from normal bazzite. Maybe some extra touches down the line."
   IMAGE_KEYWORDS: "bootc,ublue,universal-blue"
   IMAGE_LOGO_URL: "https://avatars.githubusercontent.com/u/161527865?v=4&s=200" # Put your own image here for a fancy profile on https://artifacthub.io/!
   IMAGE_NAME: "${{ github.event.repository.name }}" # output image name, usually same as repo name
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}" # do not edit
+  REPO_ORGANIZATION: "why_context"
   DEFAULT_TAG: "latest"
   
 
