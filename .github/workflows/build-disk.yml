@@ -110,8 +110,8 @@ jobs:
         uses: ublue-os/titanoboa@main
         with:
           image-ref: localhost/${{ env.IMAGE_NAME }}-payload:${{ env.DEFAULT_TAG }}
-          iso-dest: "${{ github.workspace }}/output/${{ env.IMAGE_NAME }}-${{ env.DEFAULT_TAG }}-live-amd64.iso
-
+          iso-dest: "${{ github.workspace }}/output/${{ env.IMAGE_NAME }}-${{ env.DEFAULT_TAG }}-live-amd64.iso"
+          
       - name: Stage ISO + checksum
         id: stage
         run: |
