@@ -12,7 +12,7 @@ mount -o remount,rw /proc/sys || true
 # Embed the image to install so the live ISO can install fully offline.
 podman pull "${INSTALL_IMAGE}"
 
-bash /src/titanoboa_hook_preinitramfs.sh
+bash /src/titanboa_hook_preinitramfs.sh
 
 dnf install -y dracut-live
 kernel="$(kernel-install list --json pretty | jq -r '.[] | select(.has_kernel == true) | .version')"
