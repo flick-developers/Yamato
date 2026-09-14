@@ -64,15 +64,11 @@ jobs:
       - name: Use native kernel overlayfs for rootful podman
         run: |
           set -euo pipefail
-          # Pin native overlayfs BEFORE any podman command initializes the store.
           printf '[storage]\ndriver = "overlay"\nrunroot = "/run/containers/storage"\ngraphroot = "/var/lib/containers/storage"\n' \
             | sudo tee /etc/containers/storage.conf
           
-          # The runner ships a pre-seeded rootful store whose DB recorded a different
-          # (empty/fuse) graph driver. `podman system reset` can't clear it -- it must
-          # OPEN that store first, which is the operation that fails with the
-          # "database configuration mismatch". Delete the store on disk directly so
-          # podman rebuilds a clean overlay store from the config above.
+          # reset can't help -- it must open the mismatched store, which is the failing op.
+          # Delete the pre-seeded store on disk so podman rebuilds a clean overlay store.
           sudo rm -rf /var/lib/containers/storage/* /run/containers/storage/*
           
           sudo podman info --format 'driver={{.Store.GraphDriverName}} options={{.Store.GraphOptions}}'
