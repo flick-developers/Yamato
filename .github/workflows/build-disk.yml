@@ -64,13 +64,17 @@ jobs:
       - name: Use native kernel overlayfs for rootful podman
         run: |
           set -euo pipefail
+          # ubuntu-24.04 runner ships a rootful store initialized with fuse-overlayfs
+          # (a mount_program). Its DB + overlay/.has-mount-program sentinel make podman
+          # refuse native overlay -> "database graph driver \"\" does not match overlay".
+          # `podman system reset` can't fix it (it must OPEN the bad store first, which is
+          # what fails). Delete the store on disk BEFORE any podman command, then pin overlay.
+          sudo rm -rf /var/lib/containers/storage /run/containers/storage
+          sudo mkdir -p /etc/containers
           printf '[storage]\ndriver = "overlay"\nrunroot = "/run/containers/storage"\ngraphroot = "/var/lib/containers/storage"\n' \
             | sudo tee /etc/containers/storage.conf
           
-          # reset can't help -- it must open the mismatched store, which is the failing op.
-          # Delete the pre-seeded store on disk so podman rebuilds a clean overlay store.
-          sudo rm -rf /var/lib/containers/storage/* /run/containers/storage/*
-          
+          # First podman command now initializes a clean overlay store.
           sudo podman info --format 'driver={{.Store.GraphDriverName}} options={{.Store.GraphOptions}}'
           if sudo podman info --format '{{.Store.GraphOptions}}' | grep -q mount_program; then
             echo "::error::rootful podman still uses a mount_program (fuse-overlayfs); native overlayfs pin failed"
