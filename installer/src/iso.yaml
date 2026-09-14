@@ -1,6 +1,6 @@
 # titanoboa / bootc-image-builder ISO config. build_iso.sh reads `.label` (the
 # ISO volume label, which must match root=live:CDLABEL= below) and `.grub2.*`.
-label: "Inver-Live"
+label: "inver-latest-live-amd64"
 grub2:
   timeout: 10
   default: 0
