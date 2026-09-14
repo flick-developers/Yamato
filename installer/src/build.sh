@@ -2,7 +2,7 @@
 set -exo pipefail
 { export PS4='+( ${BASH_SOURCE}:${LINENO} ): '; } 2>/dev/null
 
-INSTALL_IMAGE="${INSTALL_IMAGE:-ghcr.io/why_context/inver:latest}"
+INSTALL_IMAGE="${INSTALL_IMAGE:-ghcr.io/why-context/inver:latest}"
 
 # /root is a symlink on these images; make sure its target exists.
 mkdir -p "$(realpath /root)"
