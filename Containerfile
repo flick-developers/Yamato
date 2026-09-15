@@ -50,6 +50,7 @@ RUN dnf install -y --setopt=install_weak_deps=False \
                     plymouth \
                     plymouth-theme-spinner
 
+RUN plymouth-set-default-theme spinner
 RUN systemctl enable sddm.service
 RUN systemctl --global enable pipewire.socket wireplumber.service pipewire-pulse.socket
 RUN systemctl set-default graphical.target
