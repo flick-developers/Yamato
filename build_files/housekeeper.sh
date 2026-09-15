@@ -2,9 +2,6 @@
 
 set -euox pipefail
 
-# disable steam from autostarting (very annoying)
-rm /etc/skel/.config/autostart/steam.desktop
-
 # clear package manager
 dnf5 clean all
 
