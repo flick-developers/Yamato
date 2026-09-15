@@ -10,13 +10,24 @@ set -ouex pipefail
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/43/x86_64/repoview/index.html&protocol=https&redirect=1
 
 # SETUP REPOS
-sed -i 's/^enabled=0/enabled=1/' /etc/yum.repos.d/terra.repo
-sed -i 's/^enabled=0/enabled=1/' /etc/yum.repos.d/terra-extras.repo
-dnf5 remove -y waydroid waydroid-selinux lutris qemu qemu-* spice-server akonadi-server
+#sed -i 's/^enabled=0/enabled=1/' /etc/yum.repos.d/terra.repo
+#sed -i 's/^enabled=0/enabled=1/' /etc/yum.repos.d/terra-extras.repo
+#dnf5 remove -y waydroid waydroid-selinux lutris qemu qemu-* spice-server akonadi-server
 
 # INSTALL
-dnf5 install -y tuned tuned-ppd terra-gpg-keys --skip-unavailable
+dnf5 install -y tuned tuned-ppd --skip-unavailable
 
+dnf5 install -y --setopt=install_weak_deps=False \
+                   plasma-desktop \
+                   plasma-workspace-wayland \
+                   sddm \
+                   sddm-wayland-plasma \
+                   plasma-nm \
+                   plasma-pa \
+                   powerdevil \
+                   bluedevil \
+                   dolphin \
+                   konsole
 # Use a COPR Example:
 #
 # dnf5 -y copr enable ublue-os/staging
@@ -26,4 +37,4 @@ dnf5 install -y tuned tuned-ppd terra-gpg-keys --skip-unavailable
 
 #### Example for enabling a System Unit File
 
-systemctl enable podman.socket
+#systemctl enable podman.socket
