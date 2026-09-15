@@ -48,7 +48,8 @@ RUN dnf install -y --setopt=install_weak_deps=False \
                     grub2-tools-minimal \
                     shim-x64 \
                     plymouth \
-                    plymouth-theme-spinner
+                    plymouth-theme-spinner \
+                    iwd
 
 RUN plymouth-set-default-theme spinner
 RUN systemctl enable sddm.service
