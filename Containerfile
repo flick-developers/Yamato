@@ -11,12 +11,12 @@ RUN oras pull ghcr.io/opengamingcollective/kernel-packages-fedora:latest-fc44
 # Stage 2: Actual Build Implementation
 FROM scratch AS ctx
 COPY build_files /
-COPY --from=staging /kernel-rpms /tmp/kernel-rpms
 
 # Base Image
 FROM quay.io/fedora/fedora-bootc:44
 
 RUN rm -rf /opt && mkdir /opt
+COPY --from=staging /kernel-rpms /tmp/kernel-rpms
 RUN dnf install -y /tmp/kernel-rpms/kernel*.rpm && \
     rm -rf /tmp/kernel-rpms
 
