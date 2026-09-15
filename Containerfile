@@ -17,7 +17,7 @@ FROM quay.io/fedora/fedora-bootc:44
 
 RUN rm -rf /opt && mkdir /opt
 COPY --from=staging /kernel-rpms /tmp/kernel-rpms
-RUN dnf install -y /tmp/kernel-rpms/kernel*.rpm && \
+RUN dnf install -y --setopt=install_weak_deps=False /tmp/kernel-rpms/kernel*.rpm && \
     rm -rf /tmp/kernel-rpms
 
 ### MODIFICATIONS
@@ -34,8 +34,7 @@ RUN dnf install -y --setopt=install_weak_deps=False \
                    powerdevil \
                    bluedevil \
                    dolphin \
-                   konsole && \
-    dnf clean all
+                   konsole
 
 RUN systemctl enable sddm.service
 RUN systemctl set-default graphical.target
