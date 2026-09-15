@@ -17,21 +17,6 @@ set -ouex pipefail
 # INSTALL
 dnf5 install -y tuned tuned-ppd --skip-unavailable
 
-dnf5 install -y --setopt=install_weak_deps=False \
-                   plasma-desktop \
-                   plasma-workspace-wayland \
-                   sddm \
-                   sddm-wayland-plasma \
-                   plasma-nm \
-                   plasma-pa \
-                   powerdevil \
-                   bluedevil \
-                   dolphin \
-                   konsole
-
-systemctl enable sddm.service
-systemctl set-default graphical.target
-
 # Use a COPR Example:
 #
 # dnf5 -y copr enable ublue-os/staging
