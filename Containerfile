@@ -49,10 +49,12 @@ RUN dnf install -y --setopt=install_weak_deps=False \
                     shim-x64 \
                     plymouth \
                     plymouth-theme-spinner \
-                    iwd
+                    iwd \
+                    NetworkManager-wifi \
+                    systemd-resolved
 
 RUN plymouth-set-default-theme spinner
-RUN systemctl enable sddm.service
+RUN systemctl enable sddm.service systemd-resolved.service
 RUN systemctl --global enable pipewire.socket wireplumber.service pipewire-pulse.socket
 RUN systemctl set-default graphical.target
 
