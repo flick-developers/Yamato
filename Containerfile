@@ -16,13 +16,29 @@ COPY --from=staging /kernel-rpms /tmp/kernel-rpms
 # Base Image
 FROM quay.io/fedora/fedora-bootc:44
 
-RUN rm /opt && mkdir /opt
+RUN rm -rf /opt && mkdir /opt
 RUN dnf install -y /tmp/kernel-rpms/kernel*.rpm && \
     rm -rf /tmp/kernel-rpms
 
 ### MODIFICATIONS
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
+
+RUN dnf install -y --setopt=install_weak_deps=False \
+                   plasma-desktop \
+                   plasma-workspace-wayland \
+                   sddm \
+                   sddm-wayland-plasma \
+                   plasma-nm \
+                   plasma-pa \
+                   powerdevil \
+                   bluedevil \
+                   dolphin \
+                   konsole && \
+    dnf clean all
+
+RUN systemctl enable sddm.service
+RUN systemctl set-default graphical.target
 
 COPY system_files /
 
