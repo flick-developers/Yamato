@@ -1,11 +1,20 @@
-# Allow build scripts to be referenced without being copied into the final image
+# Stage 1: Downloads the OGC kernel and installs them directly
+FROM quay.io/fedora/fedora:44 AS staging
+
+# Install the ORAS CLI (available natively in Fedora repos)
+RUN dnf install -y golang-oras
+
+# Create a staging folder and pull the OCI artifact
+WORKDIR /kernel-rpms
+RUN oras pull ghcr.io/opengamingcollective/kernel-packages-fedora:latest-fc44
+
+# Stage 2: Actual Build Implementation
 FROM scratch AS ctx
 COPY build_files /
+COPY --from=staging /kernel-rpms /tmp/kernel-rpms
 
 # Base Image
 FROM quay.io/fedora/fedora-bootc:44
-FROM ghcr.io/opengamingcollective/kernel-packages-fedora:latest-fc44 AS ogc-kernel
-COPY --from=ogc-kernel /rpms /tmp/kernel-rpms/
 
 RUN rm /opt && mkdir /opt
 RUN dnf install -y /tmp/kernel-rpms/kernel*.rpm && \
