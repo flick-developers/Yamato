@@ -1,5 +1,5 @@
 # Stage 1: Downloads the OGC kernel and installs them directly
-FROM quay.io/fedora/fedora:44 AS staging
+FROM quay.io/fedora/fedora:45 AS staging
 
 # Install the ORAS CLI (available natively in Fedora repos)
 RUN dnf install -y golang-oras
@@ -13,7 +13,7 @@ FROM scratch AS ctx
 COPY build_files /
 
 # Base Image
-FROM quay.io/fedora/fedora-bootc:44
+FROM quay.io/fedora/fedora-bootc:45
 
 RUN rm -rf /opt && mkdir /opt
 COPY --from=staging /kernel-rpms /tmp/kernel-rpms
@@ -40,7 +40,8 @@ RUN dnf install -y --setopt=install_weak_deps=False \
                     pipewire \
                     pipewire-pulse \
                     pipewire-alsa \
-                    pipewire-utils
+                    pipewire-utils \
+                    systemd-boot-unsigned
 
                     
 
