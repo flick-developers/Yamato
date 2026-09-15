@@ -27,9 +27,10 @@ systemctl enable livesys.service livesys-late.service
 dnf install -y --enable-repo=fedora-cisco-openh264 --allowerasing \
     anaconda-live firefox libblockdev-btrfs libblockdev-lvm libblockdev-dm
 mkdir -p /var/lib/rpm-state  # Anaconda Web UI needs this
+#ostreecontainer --url=${INSTALL_IMAGE} --transport=containers-storage --no-signature-verification
 cat >>/usr/share/anaconda/interactive-defaults.ks <<EOF
 
-ostreecontainer --url=${INSTALL_IMAGE} --transport=containers-storage --no-signature-verification
+bootc --source-imgref=containers-storage:${INSTALL_IMAGE}
 EOF
 
 # ISO builder bits + the EFI layout titanoboa's build_iso.sh expects.
