@@ -9,7 +9,7 @@ KERNEL_VERSION="$(dnf5 repoquery --installed --queryformat='%{evr}.%{arch}' kern
   --reproducible \
   --zstd \
   -v \
-  --add ostree \
+  --add "ostree plymouth" \
   -f "/usr/lib/modules/$KERNEL_VERSION/initramfs.img"
 
 chmod 0600 "/usr/lib/modules/$KERNEL_VERSION/initramfs.img"
