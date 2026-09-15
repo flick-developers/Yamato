@@ -41,13 +41,16 @@ RUN dnf install -y --setopt=install_weak_deps=False \
                     pipewire-pulse \
                     pipewire-alsa \
                     pipewire-utils \
-                    systemd-boot-unsigned
-
-                    
+                    bootupd \
+                    grub2-efi-x64 \
+                    grub2-efi-x64-cdboot \
+                    grub2-tools \
+                    grub2-tools-minimal \
+                    shim-x64
 
 RUN systemctl enable sddm.service
-RUN systemctl set-default graphical.target
 RUN systemctl --global enable pipewire.socket wireplumber.service pipewire-pulse.socket
+RUN systemctl set-default graphical.target
 
 COPY system_files /
 
