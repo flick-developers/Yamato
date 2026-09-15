@@ -25,19 +25,28 @@ RUN dnf install -y --setopt=install_weak_deps=False /tmp/kernel-rpms/kernel*.rpm
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
 RUN dnf install -y --setopt=install_weak_deps=False \
-                   plasma-desktop \
-                   plasma-workspace-wayland \
-                   sddm \
-                   sddm-wayland-plasma \
-                   plasma-nm \
-                   plasma-pa \
-                   powerdevil \
-                   bluedevil \
-                   dolphin \
-                   konsole
+                    plasma-desktop \
+                    plasma-workspace-wayland \
+                    sddm \
+                    sddm-wayland-plasma \
+                    plasma-nm \
+                    plasma-pa \
+                    plasma-systemmonitor \
+                    powerdevil \
+                    bluedevil \
+                    dolphin \
+                    konsole \
+                    wireplumber \
+                    pipewire \
+                    pipewire-pulse \
+                    pipewire-alsa \
+                    pipewire-utils
+
+                    
 
 RUN systemctl enable sddm.service
 RUN systemctl set-default graphical.target
+RUN systemctl --global enable pipewire.socket wireplumber.service pipewire-pulse.socket
 
 COPY system_files /
 
