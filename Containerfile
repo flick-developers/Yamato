@@ -46,7 +46,9 @@ RUN dnf install -y --setopt=install_weak_deps=False \
                     grub2-efi-x64-cdboot \
                     grub2-tools \
                     grub2-tools-minimal \
-                    shim-x64
+                    shim-x64 \
+                    plymouth \
+                    plymouth-theme-spinner
 
 RUN systemctl enable sddm.service
 RUN systemctl --global enable pipewire.socket wireplumber.service pipewire-pulse.socket
