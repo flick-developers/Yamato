@@ -28,6 +28,10 @@ dnf5 install -y --setopt=install_weak_deps=False \
                    bluedevil \
                    dolphin \
                    konsole
+
+systemctl enable sddm.service
+systemctl set-default graphical.target
+
 # Use a COPR Example:
 #
 # dnf5 -y copr enable ublue-os/staging
