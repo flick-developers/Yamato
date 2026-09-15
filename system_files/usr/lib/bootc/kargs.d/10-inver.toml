@@ -1,0 +1,13 @@
+kargs = [
+  "quiet",
+  "rhgb",
+  # NVIDIA Stuff
+  # "rd.driver.blacklist=nouveau",
+  # "modprobe.blacklist=nouveau",
+  # "nvidia-drm.modeset=1",
+  # Commented to prevent the login from constantly looping, will fix soon
+  "enforcing=0",
+  # Add full pre-emption for low latency, prevents hanging if a program is not responding.
+  "preempt=full"
+]
+match-architectures = ["x86_64"]
