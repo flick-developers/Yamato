@@ -4,7 +4,7 @@ COPY build_files /
 
 # Base Image
 FROM quay.io/fedora/fedora-bootc:44
-FROM ghcr.io/opengamingcollective/kernel-packages-fedora:latest AS ogc-kernel
+FROM ghcr.io/opengamingcollective/kernel-packages-fedora:latest-fc44 AS ogc-kernel
 COPY --from=ogc-kernel /rpms /tmp/kernel-rpms/
 
 RUN rm /opt && mkdir /opt
