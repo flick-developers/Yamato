@@ -30,7 +30,7 @@ mkdir -p /var/lib/rpm-state  # Anaconda Web UI needs this
 #ostreecontainer --url=${INSTALL_IMAGE} --transport=containers-storage --no-signature-verification
 cat >>/usr/share/anaconda/interactive-defaults.ks <<EOF
 
-bootc --source-imgref=containers-storage:${INSTALL_IMAGE} --target-imgref=${INSTALL_IMAGE}
+ostreecontainer --url=${INSTALL_IMAGE} --transport=containers-storage --no-signature-verification
 EOF
 
 # ISO builder bits + the EFI layout titanoboa's build_iso.sh expects.
