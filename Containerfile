@@ -23,7 +23,7 @@ RUN dnf install -y --setopt=install_weak_deps=False /tmp/kernel-rpms/kernel*.rpm
 ### MODIFICATIONS
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
-
+RUN dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
 RUN dnf install -y --setopt=install_weak_deps=False \
                     plasma-desktop \
                     plasma-workspace-wayland \
@@ -48,12 +48,13 @@ RUN dnf install -y --setopt=install_weak_deps=False \
                     grub2-tools-minimal \
                     shim-x64 \
                     plymouth \
-                    plymouth-theme-bgrt \
+                    plymouth-plugin-two-step \
+                    plymouth-system-theme \
                     iwd \
-                    NetworkManager-wifi \
-                    systemd-resolved
+                    NetworkManager-wifi
 
-RUN plymouth-set-default-theme bgrt
+RUN echo -e "[Daemon]\nTheme=bgrt\nShowDelay=0" > /usr/share/plymouth/plymouthd.defaults
+RUN echo 'add_dracutmodules+=" plymouth "' > /etc/dracut.conf.d/plymouth.conf
 RUN systemctl enable sddm.service systemd-resolved.service
 RUN systemctl --global enable pipewire.socket wireplumber.service pipewire-pulse.socket
 RUN systemctl set-default graphical.target

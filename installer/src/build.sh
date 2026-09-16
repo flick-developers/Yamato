@@ -24,14 +24,13 @@ dnf install -y livesys-scripts
 sed -i "s/^livesys_session=.*/livesys_session=kde/" /etc/sysconfig/livesys
 systemctl enable livesys.service livesys-late.service
 
-dnf install -y --enable-repo=fedora-cisco-openh264 --allowerasing \
-    anaconda-live firefox libblockdev-btrfs libblockdev-lvm libblockdev-dm
-mkdir -p /var/lib/rpm-state  # Anaconda Web UI needs this
-#ostreecontainer --url=${INSTALL_IMAGE} --transport=containers-storage --no-signature-verification
-cat >>/usr/share/anaconda/interactive-defaults.ks <<EOF
+# dnf install -y --enable-repo=fedora-cisco-openh264 --allowerasing \
+#     anaconda-live firefox libblockdev-btrfs libblockdev-lvm libblockdev-dm
 
-bootc --source-imgref=containers-storage:${INSTALL_IMAGE} --target-imgref=${INSTALL_IMAGE}
-EOF
+# Readymade installer replaces anaconda-live
+dnf install -y dnf5-plugins
+dnf install -y --allowerasing readymade firefox \
+  libblockdev-btrfs libblockdev-lvm libblockdev-dm
 
 # ISO builder bits + the EFI layout titanoboa's build_iso.sh expects.
 dnf install -y grub2-efi-x64-cdboot xorriso isomd5sum
@@ -63,6 +62,7 @@ systemctl enable var-tmp.mount
 
 # The ISO config titanoboa requires at this exact path.
 mkdir -p /usr/lib/bootc-image-builder
-cp /src/iso.yaml /usr/lib/bootc-image-builder/iso.yaml
+#cp /src/iso.yaml /usr/lib/bootc-image-builder/iso.yaml
+cp /src/readymade.toml /etc/readymade.toml
 
 dnf clean all || true

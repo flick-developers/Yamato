@@ -124,7 +124,7 @@ build $target_image=image_name $tag=default_tag:
     # This actually builds the image!
     PODMAN_BUILD_ARGS=("${BUILD_ARGS[@]}" "${LABELS[@]}" --pull=newer --tag "${target_image}:${tag}" --file Containerfile)
 
-    podman build "${PODMAN_BUILD_ARGS[@]}" .
+    podman build --dns=1.1.1.1 --dns=8.8.8.8 "${PODMAN_BUILD_ARGS[@]}" .
 
 # Split the image for smaller updates (New)!
 rechunk $target_image=image_name $tag=default_tag:
