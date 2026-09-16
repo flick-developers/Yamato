@@ -8,6 +8,8 @@ kargs = [
   # Commented to prevent the login from constantly looping, will fix soon
   "enforcing=0",
   # Add full pre-emption for low latency, prevents hanging if a program is not responding.
-  "preempt=full"
+  "preempt=full",
+  "vt.global_cursor_default=0",
+  "plymouth.ignore-serial-consoles"
 ]
 match-architectures = ["x86_64"]
