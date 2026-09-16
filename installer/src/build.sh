@@ -29,41 +29,11 @@ systemctl enable livesys.service livesys-late.service
 
 # Readymade installer replaces anaconda-live
 dnf install -y dnf5-plugins
-dnf install -y --setopt=install_weak_deps=False --allowerasing readymade firefox \
-  libblockdev-btrfs libblockdev-lvm libblockdev-dm glibc-langpack-all
 
-
-# ISO builder bits + the EFI layout titanoboa's build_iso.sh expects.
-dnf install -y grub2-efi-x64-cdboot xorriso isomd5sum
-mkdir -p /boot/efi
-cp -av /usr/lib/efi/*/*/EFI /boot/efi/ || true
-cp -v /boot/efi/EFI/fedora/grubx64.efi /boot/efi/EFI/BOOT/fbx64.efi || true
+for script in /src/live_cd/*.sh; do
+  echo -e "\033[1;34m::\033[0m $script"
+  bash "$script"
+done
 
 # UTC clock for the live session.
 systemd-firstboot --timezone UTC || true
-
-# The live root is a small tmpfs overlay; ostree install needs room in /var/tmp.
-# `|| :` because the dnf build cache is bind-mounted at /var/tmp/libdnf5 during
-# this build, so the mountpoint itself can't be removed (and need not be — the
-# cache mount isn't committed to the image, and var-tmp.mount overlays it at boot).
-rm -rf /var/tmp || :
-mkdir -p /var/tmp
-cat >/etc/systemd/system/var-tmp.mount <<'EOF'
-[Unit]
-Description=Larger tmpfs for /var/tmp on the live system
-[Mount]
-What=tmpfs
-Where=/var/tmp
-Type=tmpfs
-Options=size=50%,nr_inodes=1m
-[Install]
-WantedBy=local-fs.target
-EOF
-systemctl enable var-tmp.mount
-
-# The ISO config titanoboa requires at this exact path.
-mkdir -p /usr/lib/bootc-image-builder
-cp /src/iso.yaml /usr/lib/bootc-image-builder/iso.yaml
-cp /src/readymade.toml /etc/readymade.toml
-
-dnf clean all || true

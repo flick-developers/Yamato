@@ -50,12 +50,13 @@ RUN dnf install -y --setopt=install_weak_deps=False \
                     plymouth \
                     plymouth-plugin-two-step \
                     plymouth-system-theme \
+                    plymouth-plugin-label\
                     iwd \
                     NetworkManager-wifi \
                     libglvnd-gles \
                     os-prober
 
-RUN echo -e "[Daemon]\nTheme=bgrt\nShowDelay=0" > /usr/share/plymouth/plymouthd.defaults
+RUN plymouth-set-default-theme bgrt
 RUN echo 'add_dracutmodules+=" plymouth "' > /etc/dracut.conf.d/plymouth.conf
 RUN systemctl enable sddm.service systemd-resolved.service
 RUN systemctl --global enable pipewire.socket wireplumber.service pipewire-pulse.socket
