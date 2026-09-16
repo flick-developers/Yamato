@@ -62,7 +62,7 @@ systemctl enable var-tmp.mount
 
 # The ISO config titanoboa requires at this exact path.
 mkdir -p /usr/lib/bootc-image-builder
-#cp /src/iso.yaml /usr/lib/bootc-image-builder/iso.yaml
+cp /src/iso.yaml /usr/lib/bootc-image-builder/iso.yaml
 cp /src/readymade.toml /etc/readymade.toml
 
 dnf clean all || true
