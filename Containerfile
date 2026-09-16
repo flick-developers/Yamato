@@ -48,12 +48,12 @@ RUN dnf install -y --setopt=install_weak_deps=False \
                     grub2-tools-minimal \
                     shim-x64 \
                     plymouth \
-                    plymouth-theme-spinner \
+                    plymouth-theme-bgrt \
                     iwd \
                     NetworkManager-wifi \
                     systemd-resolved
 
-RUN plymouth-set-default-theme spinner
+RUN plymouth-set-default-theme bgrt
 RUN systemctl enable sddm.service systemd-resolved.service
 RUN systemctl --global enable pipewire.socket wireplumber.service pipewire-pulse.socket
 RUN systemctl set-default graphical.target
