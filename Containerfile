@@ -51,7 +51,9 @@ RUN dnf install -y --setopt=install_weak_deps=False \
                     plymouth-plugin-two-step \
                     plymouth-system-theme \
                     iwd \
-                    NetworkManager-wifi
+                    NetworkManager-wifi \
+                    libglvnd-gles \
+                    os-prober
 
 RUN echo -e "[Daemon]\nTheme=bgrt\nShowDelay=0" > /usr/share/plymouth/plymouthd.defaults
 RUN echo 'add_dracutmodules+=" plymouth "' > /etc/dracut.conf.d/plymouth.conf

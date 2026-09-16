@@ -15,7 +15,7 @@ set -ouex pipefail
 #dnf5 remove -y waydroid waydroid-selinux lutris qemu qemu-* spice-server akonadi-server
 
 # INSTALL
-dnf5 install -y tuned tuned-ppd --skip-unavailable
+dnf5 install -y tuned tuned-ppd taidan --skip-unavailable
 
 # Use a COPR Example:
 #

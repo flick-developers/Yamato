@@ -29,8 +29,9 @@ systemctl enable livesys.service livesys-late.service
 
 # Readymade installer replaces anaconda-live
 dnf install -y dnf5-plugins
-dnf install -y --allowerasing readymade firefox \
-  libblockdev-btrfs libblockdev-lvm libblockdev-dm
+dnf install -y --setopt=install_weak_deps=False --allowerasing readymade firefox \
+  libblockdev-btrfs libblockdev-lvm libblockdev-dm glibc-langpack-all
+
 
 # ISO builder bits + the EFI layout titanoboa's build_iso.sh expects.
 dnf install -y grub2-efi-x64-cdboot xorriso isomd5sum

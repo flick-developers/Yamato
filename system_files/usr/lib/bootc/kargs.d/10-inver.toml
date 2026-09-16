@@ -1,5 +1,6 @@
 kargs = [
   "quiet",
+  "splash",
   "rhgb",
   # NVIDIA Stuff
   # "rd.driver.blacklist=nouveau",
