@@ -31,7 +31,7 @@ systemctl enable livesys.service livesys-late.service
 dnf install -y dnf5-plugins
 
 for script in /src/live_cd/*.sh; do
-  echo -e "\e[1;32m --> \e[0m $script"
+  echo -e "\n\n\e[1;32m --> \e[0m $script"
   bash "$script"
 done
 
