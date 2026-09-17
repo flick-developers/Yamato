@@ -47,4 +47,5 @@ There are three main pillars by which decisions on what to add or retract is dec
      usage, like from KDE Plasma, can be ignored regarding this.
 
 ### Can anyone contribute?
-Yes. Yes they can. Provided they don't use AI especially without checking the output.
+Yes. Yes they can. Provided they don't use AI especially without checking the output and showing
+tests.
