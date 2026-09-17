@@ -1,5 +1,4 @@
-This is the monorepo for the Inver project (Although a name change is impending once I actually
-decide on a better one.)
+This is the monorepo for the Yamato project. (Called that because it quite literally translates into "Great Harmony")
 
 ## Directory Structure
 - `/TOOLING` - Custom tooling and packages that get built as  an OCI image.
