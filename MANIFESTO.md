@@ -28,11 +28,11 @@ personally believe that whilst a distribution or "flavour" of linux may have a g
 bundle loads of software, it has specific disadvantages on Atomic images:
  * Larger Update Sizes; Whilst it doesn't sound too bad, consideration has to be taken into the
    fact OSTree, and BootC updates already take a heck of a long time. The bigger the image, the
-   more centuries you will age waiting on OSTree to apply deltas.
+   more centuries you will age waiting on OSTree to finish rebuilding and layering.
  * It makes software a pain to remove. This project actually started directly because I was a
    user of bazzite, however, it just had so much software that I would never use, like sunshine.
- * It slows boot; It's already bad enough by being forced to use GRUB, please don't make it
-   worse. Windows legitimately starts faster. 
+ * It slows boot; It's already bad enough by being forced to use GRUB (at least on my system, it's
+   quite noticable compared to systemd-boot). 
 
 ### How is this different?
 The base idea is to provide the drivers and configuration for the user to not experience anything
