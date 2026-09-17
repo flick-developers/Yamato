@@ -1,0 +1,9 @@
+cosign.key
+_build_*
+output
+_build-*/**
+*_chunkah_*
+*_rpm-ostree_*
+inver-live-iso/inver-latest-live-amd64.iso
+inver-live-iso/inver-latest-live-amd64.iso-CHECKSUM
+inver-live-iso/inver-latest-live-amd64.iso.sig
