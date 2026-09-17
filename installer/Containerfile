@@ -1,6 +1,0 @@
-ARG BASE_IMAGE=ghcr.io/why_context/inver:latest
-FROM ${BASE_IMAGE}
-COPY ./src /src
-RUN --mount=type=cache,target=/var/tmp/libdnf5,id=libdnf5 \
-    /src/build.sh
-RUN rm -fr /src
